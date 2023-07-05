@@ -1,6 +1,7 @@
 const errorHandlerMw = require('../middleware/errorHandlerMw');
 const APIfeaturs = require('./../util/queryHandler');
 const Tour = require('../model/tourModel');
+const catchAsync = require('./../util/catchAsync');
 
 exports.getAllTours = async (req, res) => {
     try {
@@ -102,51 +103,51 @@ exports.getTourById = async (req, res) => {
     }
 };
 
-exports.addTour = async (req, res) => {
-    try {
-        const {
-            name,
-            duration,
-            maxGroupSize,
-            difficulty,
-            ratingsAverage,
-            ratingsQuantity,
-            price,
-            priceDiscount,
-            summary,
-            discription,
-            imageCover,
-            images,
-            createdAt,
-            startDates,
-            secretTour,
-        } = req.body;
+exports.addTour = catchAsync(async (req, res) => {
+    // try {
+    const {
+        name,
+        duration,
+        maxGroupSize,
+        difficulty,
+        ratingsAverage,
+        ratingsQuantity,
+        price,
+        priceDiscount,
+        summary,
+        discription,
+        imageCover,
+        images,
+        createdAt,
+        startDates,
+        secretTour,
+    } = req.body;
 
-        const newTour = await Tour.create({
-            name,
-            duration,
-            maxGroupSize,
-            difficulty,
-            ratingsAverage,
-            ratingsQuantity,
-            price,
-            priceDiscount,
-            summary,
-            discription,
-            imageCover,
-            images,
-            createdAt,
-            startDates,
-            secretTour,
-        });
-        res.status(200).json({
-            status: 'success',
-            data: { newTour },
-        });
-    } catch (err) {
-        errorHandlerMw(err, res);
-    }
-};
+    const newTour = await Tour.create({
+        name,
+        duration,
+        maxGroupSize,
+        difficulty,
+        ratingsAverage,
+        ratingsQuantity,
+        price,
+        priceDiscount,
+        summary,
+        discription,
+        imageCover,
+        images,
+        createdAt,
+        startDates,
+        secretTour,
+    });
+    res.status(200).json({
+        status: 'success',
+        data: { newTour },
+    });
+    // } catch (err) {
+    //     errorHandlerMw(err, res);
+    // }
+});
 
 exports.updateTourById = async (req, res) => {
     try {
