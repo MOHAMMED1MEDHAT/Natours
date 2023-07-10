@@ -81,7 +81,6 @@ exports.aliasTopTour = catchAsync(async (req, res, next) => {
     req.query.limit = '5';
     req.query.sort = '-ratingsAvarage,price';
     req.query.fields = 'name,price,ratingsAvarage,summary';
-    next();
 });
 
 exports.getTourById = catchAsync(async (req, res, next) => {

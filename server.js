@@ -17,8 +17,8 @@ mongoose
     })
     .then(() => {
         console.log('Connected to db');
-    });
-// .catch((err) => console.log('error occured' + err));
+    })
+    .catch((err) => console.log('error occured' + err));
 
 // console.log(process.env);
 

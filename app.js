@@ -5,6 +5,8 @@
 const morgan = require('morgan');
 const express = require('express');
 
+const errorHandlerMw = require('./middleware/errorHandlerMw');
+
 const app = express();
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -14,8 +16,10 @@ app.use(express.static(`${__dirname}/public`));
 
 //routes
 const tourRouter = require('./routes/tourRouter');
+const userRouter = require('./routes/userRoutes');
 
 app.use('/api/v1/tour', tourRouter);
+app.use('/api/v1/users', userRouter);
 
 app.all('*', (req, res, next) => {
     res.status(404).json({
@@ -23,5 +27,8 @@ app.all('*', (req, res, next) => {
         message: `can't find ${req.originalUrl} on this server`,
     });
 });
+
+//errorHandlerMw
+app.use(errorHandlerMw);
 
 module.exports = app;
