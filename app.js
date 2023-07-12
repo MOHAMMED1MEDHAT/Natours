@@ -5,7 +5,7 @@
 const morgan = require('morgan');
 const express = require('express');
 
-const errorHandlerMw = require('./middleware/errorHandlerMw');
+const globalErrorHandler = require('./controller/errorController');
 
 const app = express();
 if (process.env.NODE_ENV === 'development') {
@@ -29,6 +29,6 @@ app.all('*', (req, res, next) => {
 });
 
 //errorHandlerMw
-app.use(errorHandlerMw);
+app.use(globalErrorHandler);
 
 module.exports = app;
