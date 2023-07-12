@@ -38,6 +38,7 @@ const userSchema = new mongoose.Schema(
             },
             required: [true, 'Please confirm your password'],
         },
+        passwordChangedAt: Date,
     },
     {
         toJSON: { virtuals: true },
@@ -60,6 +61,19 @@ userSchema.pre('save', async function (next) {
 //instance method
 userSchema.methods.correctPassword = async function (inPswd, realPswd) {
     return await bcrypt.compare(inPswd, realPswd);
+};
+
+userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
+    if (this.passwordChangedAt) {
+        const changedTimeStamp = parseInt(
+            this.passwordChangedAt.getTime() / 1000,
+            10
+        );
+
+        return JWTTimeStamp < changedTimeStamp;
+    }
+
+    return false;
 };
 
 module.exports = mongoose.model('User', userSchema);
