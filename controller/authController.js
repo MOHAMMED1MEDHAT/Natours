@@ -16,11 +16,15 @@ exports.signup = catchAsync(async (req, res, next) => {
         {
             userId: newUser._id,
         },
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
+        {
+            expiresIn: process.env.JWT_EXPIRES_IN,
+        }
     );
 
     res.status(200).json({
         status: 'success',
+        token,
         data: {
             user: newUser,
         },
