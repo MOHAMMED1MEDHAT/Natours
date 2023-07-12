@@ -45,7 +45,15 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(new AppError('Incorrect Email Or Password', 401));
     }
 
-    const token = '';
+    const token = jwt.sign(
+        {
+            userId: user._id,
+        },
+        process.env.JWT_SECRET,
+        {
+            expiresIn: process.env.JWT_EXPIRES_IN,
+        }
+    );
 
     res.status(200).json({
         status: 'success',
