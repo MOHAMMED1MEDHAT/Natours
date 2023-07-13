@@ -8,7 +8,7 @@ router.post('/signup', AuthUser.signup);
 router.post('/login', AuthUser.login);
 
 router.post('/forgetPassword', AuthUser.forgetPassword);
-// router.patch('/resetPassword/:token', AuthUser.resetPassword);
+router.patch('/resetPassword/:token', AuthUser.resetPassword);
 
 router.route('/').get(User.getAllUsers).post(User.createUser);
 
