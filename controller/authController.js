@@ -98,5 +98,15 @@ exports.protect = catchAsync(async (req, res, next) => {
         );
     }
     //grant access to protected route
+    req.user = user;
     next();
 });
+
+exports.restrictTo = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            next(new AppError('You do not have permission', 403));
+        }
+        next();
+    };
+};

@@ -6,13 +6,21 @@ const Tours = require('../controller/tourController');
 router
     .route('/')
     .get(authController.protect, Tours.getAllTours)
-    .post(Tours.addTour);
+    .post(
+        authController.protect,
+        authController.restrictTo('admin', 'lead-guide'),
+        Tours.addTour
+    );
 
 router
     .route('/:id')
     .get(Tours.getTourById)
     .patch(Tours.updateTourById)
-    .delete(Tours.deleteTourById);
+    .delete(
+        authController.protect,
+        authController.restrictTo('admin', 'lead-guide'),
+        Tours.deleteTourById
+    );
 
 // router.get('/', Tours.getAllTours);
 
