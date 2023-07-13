@@ -7,48 +7,8 @@ const { promisify } = require('util');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-exports.signup = catchAsync(async (req, res, next) => {
-    const { name, email, password, passwordConfirm } = req.body;
-    const newUser = await User.create({
-        name,
-        email,
-        password,
-        passwordConfirm,
-    });
-
-    const token = jwt.sign(
-        {
-            userId: newUser._id,
-        },
-        process.env.JWT_SECRET,
-        {
-            expiresIn: process.env.JWT_EXPIRES_IN,
-        }
-    );
-
-    res.status(200).json({
-        status: 'success',
-        token,
-        data: {
-            user: newUser,
-        },
-    });
-});
-
-exports.login = catchAsync(async (req, res, next) => {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-        return next(new AppError('please provide email and password', 400));
-    }
-
-    const user = await User.findOne({ email }).exec();
-
-    if (!user || !(await user.correctPassword(password, user.password))) {
-        return next(new AppError('Incorrect Email Or Password', 401));
-    }
-
-    const token = jwt.sign(
+const createAndSendJWT = (user, stausCode, res) => {
+    const JWTToken = jwt.sign(
         {
             userId: user._id,
         },
@@ -58,11 +18,39 @@ exports.login = catchAsync(async (req, res, next) => {
         }
     );
 
-    res.status(200).json({
+    res.status(stausCode).json({
         status: 'success',
-        token,
-        data: {},
+        token: JWTToken,
+        data: {
+            user,
+        },
     });
+};
+
+exports.signup = catchAsync(async (req, res, next) => {
+    const { name, email, password, passwordConfirm } = req.body;
+    const newUser = await User.create({
+        name,
+        email,
+        password,
+        passwordConfirm,
+    });
+    createAndSendJWT(newUser, 201, res);
+});
+
+exports.login = catchAsync(async (req, res, next) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return next(new AppError('please provide email and password', 400));
+    }
+
+    const user = await User.findOne({ email }).select('+password').exec();
+
+    if (!user || !(await user.correctPassword(password, user.password))) {
+        return next(new AppError('Incorrect Email Or Password', 401));
+    }
+    createAndSendJWT(user, 200, res);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -182,19 +170,21 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     //update changedPasswordAt property for the user
     //log the user in send jwt
 
-    const JWTToken = jwt.sign(
-        {
-            userId: user._id,
-        },
-        process.env.JWT_SECRET,
-        {
-            expiresIn: process.env.JWT_EXPIRES_IN,
-        }
-    );
+    createAndSendJWT(user, 200, res);
+});
 
-    res.status(200).json({
-        status: 'success',
-        token: JWTToken,
-        data: {},
-    });
+exports.updatePassword = catchAsync(async (req, res, next) => {
+    const user = await User.findById(req.user.id).select('+password');
+
+    if (
+        !(await user.correctPassword(req.body.passwordCurrent, user.password))
+    ) {
+        return next(new AppError('your current password is not this', 401));
+    }
+
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    await user.save();
+
+    createAndSendJWT(user, 200, res);
 });
