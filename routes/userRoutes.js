@@ -5,10 +5,10 @@ const router = require('express').Router();
 const User = require('./../controller/userController');
 
 router.post('/signup', AuthUser.signup);
-router.patch('/resetPassword/:token', AuthUser.login);
+router.post('/login', AuthUser.login);
 
 router.post('/forgetPassword', AuthUser.forgetPassword);
-// router.post('/resetPassword', AuthUser.resetPassword);
+// router.patch('/resetPassword/:token', AuthUser.resetPassword);
 
 router.route('/').get(User.getAllUsers).post(User.createUser);
 
