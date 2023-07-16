@@ -12,6 +12,9 @@ router.patch('/resetPassword/:token', AuthUser.resetPassword);
 
 router.patch('/updateMyPassword', AuthUser.protect, AuthUser.updatePassword);
 
+router.patch('/updateMe', AuthUser.protect, User.updateMe);
+router.delete('/deleteMe', AuthUser.protect, User.deleteMe);
+
 router.route('/').get(User.getAllUsers).post(User.createUser);
 
 router
