@@ -5,18 +5,20 @@
 const morgan = require('morgan');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 const globalErrorHandler = require('./controller/errorController');
+
+const app = express();
+
+//middeleware
+app.use(helmet());
 
 const limit = rateLimit({
     max: 120,
     windowMs: 60 * 60 * 1000,
     message: 'Too many request from this IP, please try again in an hour',
 });
-
-const app = express();
-
-//middeleware
 app.use('/api', limit);
 
 if (process.env.NODE_ENV === 'development') {
