@@ -8,6 +8,7 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const expressMongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const hpp = require('hpp');
 
 const globalErrorHandler = require('./controller/errorController');
 
@@ -32,6 +33,19 @@ app.use(express.json({ limit: '16kb' }));
 app.use(expressMongoSanitize());
 
 app.use(xss());
+
+app.use(
+    hpp({
+        whitelist: [
+            'duration',
+            'price',
+            'maxGroupSize',
+            'ratingsAverage',
+            'ratingsQuantity',
+            'difficulty',
+        ],
+    })
+);
 
 app.use(express.static(`${__dirname}/public`));
 
