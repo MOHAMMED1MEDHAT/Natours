@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-app.use(express.json());
+app.use(express.json({ limit: '16kb' }));
 app.use(express.static(`${__dirname}/public`));
 
 //routes
