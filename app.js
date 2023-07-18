@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const expressMongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 
 const globalErrorHandler = require('./controller/errorController');
 
@@ -26,6 +28,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json({ limit: '16kb' }));
+
+app.use(expressMongoSanitize());
+
+app.use(xss());
+
 app.use(express.static(`${__dirname}/public`));
 
 //routes
