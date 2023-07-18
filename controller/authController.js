@@ -29,7 +29,7 @@ const createAndSendJWT = (user, stausCode, res) => {
         cookieOptions.secure = true;
     }
 
-    res.cookie('jwt', token, cookieOptions);
+    res.cookie('jwt', JWTToken, cookieOptions);
 
     user.password = undefined;
 
