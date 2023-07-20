@@ -96,6 +96,7 @@ exports.getTourById = catchAsync(async (req, res, next) => {
 });
 
 exports.addTour = catchAsync(async (req, res, next) => {
+    // console.log('in add');
     const {
         name,
         duration,
@@ -112,7 +113,11 @@ exports.addTour = catchAsync(async (req, res, next) => {
         createdAt,
         startDates,
         secretTour,
+        startLocation,
+        locations,
     } = req.body;
+
+    // console.log('body', req.body);
 
     const newTour = await Tour.create({
         name,
@@ -130,7 +135,12 @@ exports.addTour = catchAsync(async (req, res, next) => {
         createdAt,
         startDates,
         secretTour,
+        startLocation,
+        locations,
     });
+
+    // console.log(newTour);
+
     res.status(200).json({
         status: 'success',
         data: { newTour },

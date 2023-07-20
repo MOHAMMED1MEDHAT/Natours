@@ -24,9 +24,8 @@ const limit = rateLimit({
 });
 app.use('/api', limit);
 
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
-}
+// if (process.env.NODE_ENV === 'development') {
+app.use(morgan('dev'));
 
 app.use(express.json({ limit: '16kb' }));
 
