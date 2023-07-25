@@ -117,8 +117,6 @@ exports.addTour = catchAsync(async (req, res, next) => {
         locations,
     } = req.body;
 
-    // console.log('body', req.body);
-
     const newTour = await Tour.create({
         name,
         duration,
@@ -138,8 +136,6 @@ exports.addTour = catchAsync(async (req, res, next) => {
         startLocation,
         locations,
     });
-
-    // console.log(newTour);
 
     res.status(200).json({
         status: 'success',

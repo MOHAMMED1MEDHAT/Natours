@@ -90,6 +90,12 @@ const TourSchema = new mongoose.Schema(
             address: String,
             description: String,
         },
+        guides: [
+            {
+                type: mongoose.Schema.ObjectId,
+                ref: 'User',
+            },
+        ],
         locations: [
             {
                 type: {
