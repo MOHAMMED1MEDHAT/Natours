@@ -83,8 +83,6 @@ exports.aliasTopTour = catchAsync(async (req, res, next) => {
 });
 
 exports.getTourById = catchAsync(async (req, res, next) => {
-    console.log('in get');
-    console.log(req.params.id);
     const tour = await Tour.findById(req.params.id)
         .select('-_id -__v')
         .populate({
@@ -92,8 +90,6 @@ exports.getTourById = catchAsync(async (req, res, next) => {
             select: '-__v -passwordChangedAt',
         })
         .exec();
-
-    console.log(!tour);
 
     if (!tour) {
         return next(new AppError('No tour found with that ID', 404));
