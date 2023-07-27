@@ -50,9 +50,11 @@ app.use(express.static(`${__dirname}/public`));
 
 //routes
 const tourRouter = require('./routes/tourRouter');
+const reviewRouter = require('./routes/reviewRouter');
 const userRouter = require('./routes/userRoutes');
 
 app.use('/api/v1/tour', tourRouter);
+app.use('/api/v1/review', reviewRouter);
 app.use('/api/v1/users', userRouter);
 
 app.all('*', (req, res, next) => {
