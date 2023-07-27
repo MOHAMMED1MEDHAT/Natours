@@ -83,7 +83,17 @@ exports.aliasTopTour = catchAsync(async (req, res, next) => {
 });
 
 exports.getTourById = catchAsync(async (req, res, next) => {
-    const tour = await Tour.findById(req.params.id).select('-_id -__v').exec();
+    console.log('in get');
+    console.log(req.params.id);
+    const tour = await Tour.findById(req.params.id)
+        .select('-_id -__v')
+        .populate({
+            path: 'guides',
+            select: '-__v -passwordChangedAt',
+        })
+        .exec();
+
+    console.log(!tour);
 
     if (!tour) {
         return next(new AppError('No tour found with that ID', 404));
