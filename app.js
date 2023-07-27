@@ -24,27 +24,28 @@ const limit = rateLimit({
 });
 app.use('/api', limit);
 
-// if (process.env.NODE_ENV === 'development') {
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
 
-// app.use(express.json({ limit: '16kb' }));
+app.use(express.json({ limit: '16kb' }));
 
-// app.use(expressMongoSanitize());
+app.use(expressMongoSanitize());
 
-// app.use(xss());
+app.use(xss());
 
-// app.use(
-//     hpp({
-//         whitelist: [
-//             'duration',
-//             'price',
-//             'maxGroupSize',
-//             'ratingsAverage',
-//             'ratingsQuantity',
-//             'difficulty',
-//         ],
-//     })
-// );
+app.use(
+    hpp({
+        whitelist: [
+            'duration',
+            'price',
+            'maxGroupSize',
+            'ratingsAverage',
+            'ratingsQuantity',
+            'difficulty',
+        ],
+    })
+);
 
 app.use(express.static(`${__dirname}/public`));
 
