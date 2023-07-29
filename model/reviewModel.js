@@ -4,12 +4,12 @@ const reviewSchema = new mongoose.Schema(
     {
         author: {
             type: mongoose.Types.ObjectId,
-            ref: 'user',
+            ref: 'User',
             required: [true, 'a review must have an author'],
         },
         tour: {
             type: mongoose.Types.ObjectId,
-            ref: 'tour',
+            ref: 'Tour',
             required: [true, 'a review must have a tour'],
         },
         review: {
