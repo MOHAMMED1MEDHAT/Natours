@@ -13,7 +13,13 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
         .project()
         .pagination();
 
-    const reviews = await APIfeaturesObj.MongooseQuery;
+    const reviews = await APIfeaturesObj.MongooseQuery.populate({
+        path: 'author',
+        select: 'name photo',
+    }).populate({
+        path: 'tour',
+        select: 'name',
+    });
 
     res.status(200).json({
         status: 'success',
