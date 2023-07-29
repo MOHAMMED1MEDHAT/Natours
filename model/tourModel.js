@@ -144,15 +144,7 @@ TourSchema.pre(/^find/, function (next) {
     this.populate({
         path: 'guides',
         select: '-__v -passwordChangedAt',
-    })
-        .populate({
-            path: 'reviews',
-            select: '-__v',
-        })
-        .populate({
-            path: 'locations',
-            select: '-__v',
-        });
+    });
     next();
 });
 
