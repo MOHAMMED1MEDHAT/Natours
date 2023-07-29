@@ -40,11 +40,10 @@ exports.getReviewById = catchAsync(async (req, res, next) => {
 exports.addReview = catchAsync(async (req, res, next) => {
     const user = req.user;
 
-    console.log(req.body);
     const { review, rating, tour } = req.body;
 
     const newReview = await Review.create({
-        user: user._id,
+        author: user._id,
         review,
         rating,
         tour,

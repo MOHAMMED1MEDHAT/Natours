@@ -50,8 +50,11 @@ class APIfeatures {
                 `-_id ${this.options.fields}`
             );
         } else {
-            //default sort
-            this.MongooseQuery = this.MongooseQuery.select('-__v -_id');
+            if (process.env.NODE_ENV === 'development') {
+                this.MongooseQuery = this.MongooseQuery.select('-__v');
+            } else if (process.env.NODE_ENV === 'production') {
+                this.MongooseQuery = this.MongooseQuery.select('-__v -_id');
+            }
         }
         return this;
     }

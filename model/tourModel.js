@@ -120,6 +120,10 @@ TourSchema.virtual('durationWeeks').get(function () {
     return this.duration / 7;
 });
 
+TourSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+
 // TourSchema.pre('save', function (next) {
 //     this.name = this.name + 'mohammed';
 //     next();
