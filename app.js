@@ -24,9 +24,9 @@ const limit = rateLimit({
 });
 app.use('/api', limit);
 //TODO:enable on delivery
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
-}
+// if (process.env.NODE_ENV === 'development') {
+//     app.use(morgan('dev'));
+// }
 //TODO:delete on delivery
 app.use(morgan('dev'));
 
