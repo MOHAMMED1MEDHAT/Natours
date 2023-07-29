@@ -23,10 +23,12 @@ const limit = rateLimit({
     message: 'Too many request from this IP, please try again in an hour',
 });
 app.use('/api', limit);
-
+//TODO:enable on delivery
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
+//TODO:delete on delivery
+app.use(morgan('dev'));
 
 app.use(express.json({ limit: '16kb' }));
 

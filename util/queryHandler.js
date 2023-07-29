@@ -50,11 +50,14 @@ class APIfeatures {
                 `-_id ${this.options.fields}`
             );
         } else {
-            if (process.env.NODE_ENV === 'development') {
-                this.MongooseQuery = this.MongooseQuery.select('-__v');
-            } else if (process.env.NODE_ENV === 'production') {
-                this.MongooseQuery = this.MongooseQuery.select('-__v -_id');
-            }
+            //TODO:enable this on delivery
+            // if (process.env.NODE_ENV === 'development') {
+            //     this.MongooseQuery = this.MongooseQuery.select('-__v');
+            // } else if (process.env.NODE_ENV === 'production') {
+            //     this.MongooseQuery = this.MongooseQuery.select('-__v -_id');
+            // }
+            //TODO:delete this on delivery
+            this.MongooseQuery = this.MongooseQuery.select('-__v');
         }
         return this;
     }
