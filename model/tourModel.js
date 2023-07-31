@@ -124,15 +124,11 @@ TourSchema.virtual('id').get(function () {
     return this._id.toHexString();
 });
 
-// TourSchema.pre('save', function (next) {
-//     this.name = this.name + 'mohammed';
-//     next();
-// });
-
-// TourSchema.post('save', function (doc, next) {
-//     console.log(doc);
-//     next();
-// });
+TourSchema.virtuals('reviews', {
+    ref: 'review',
+    foreignField: 'tour',
+    localField: '_id',
+});
 
 TourSchema.pre(/^find/, function (next) {
     this.find({ secretTour: { $ne: true } });
