@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const authController = require('./../controller/authController');
 const Tours = require('../controller/tourController');
+const Reviews = require('../controller/reviewController');
 
 router
     .route('/')
@@ -11,6 +12,17 @@ router
         authController.restrictTo('admin', 'lead-guide'),
         Tours.addTour
     );
+
+router
+    .route('/:tourId/reviews')
+    .post(
+        authController.protect,
+        authController.restrictTo('user'),
+        Reviews.addReview
+    )
+    .get(Reviews.getAllReviews);
+
+router.get('/:tourId/reviews/:reviewId', Reviews.getReviewById);
 
 router
     .route('/:id')

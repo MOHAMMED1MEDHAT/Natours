@@ -40,6 +40,10 @@ exports.getReviewById = catchAsync(async (req, res, next) => {
 exports.addReview = catchAsync(async (req, res, next) => {
     const user = req.user;
 
+    //To Allow for Nested Routes
+    if (!req.body.tour) req.body.tour = req.params.tourId;
+    if (!req.body.author) req.body.author = req.user._id;
+
     const { review, rating, tour } = req.body;
 
     const newReview = await Review.create({
