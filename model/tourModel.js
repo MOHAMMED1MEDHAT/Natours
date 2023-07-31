@@ -124,7 +124,7 @@ TourSchema.virtual('id').get(function () {
     return this._id.toHexString();
 });
 
-TourSchema.virtuals('reviews', {
+TourSchema.virtual('reviews', {
     ref: 'review',
     foreignField: 'tour',
     localField: '_id',

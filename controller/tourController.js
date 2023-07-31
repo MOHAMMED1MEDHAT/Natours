@@ -88,7 +88,7 @@ exports.getTourById = catchAsync(async (req, res, next) => {
             path: 'reviews',
             select: 'review rating author',
         })
-        .select('-_id -__v')
+        // .select('-_id -__v')
         .exec();
 
     if (!tour) {
