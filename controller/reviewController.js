@@ -6,7 +6,7 @@ const AppError = require('../util/appError');
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
     let tourQuery = {};
-    if (req.params.tourId) tourQuery = req.params.tourId;
+    if (req.params.tourId) tourQuery.tour = req.params.tourId;
 
     let Query = Review.find(tourQuery);
 
@@ -63,3 +63,6 @@ exports.addReview = catchAsync(async (req, res, next) => {
         },
     });
 });
+//post /:tourId/reviews/:reviewId
+//get /:tourId/reviews
+//get /:tourId/reviews/:reviewId
