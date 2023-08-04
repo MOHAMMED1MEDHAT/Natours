@@ -3,6 +3,7 @@ const ApiFeatures = require('./../util/queryHandler');
 const Review = require('./../model/reviewModel');
 const catchAsync = require('../util/catchAsync');
 const AppError = require('../util/appError');
+const factory = require('./handlerFactory');
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
     let tourQuery = {};
@@ -63,6 +64,5 @@ exports.addReview = catchAsync(async (req, res, next) => {
         },
     });
 });
-//post /:tourId/reviews/:reviewId
-//get /:tourId/reviews
-//get /:tourId/reviews/:reviewId
+
+exports.deleteReview = factory.deleteOne(Review);
