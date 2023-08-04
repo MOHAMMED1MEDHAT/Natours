@@ -1,4 +1,5 @@
 const catchAsync = require('../util/catchAsync');
+const APIFeatures = require('./../util/queryHandler');
 const AppError = require('./../util/appError');
 
 exports.deleteOne = (Model) =>
@@ -59,6 +60,23 @@ exports.getOne = (Model, populateOptions) =>
 
         res.status(200).json({
             status: 'success',
+            data: { doc },
+        });
+    });
+
+exports.getAll = (Model) =>
+    catchAsync(async (req, res, next) => {
+        const APIfeaturesObj = new APIFeatures(Model.find(), req.query)
+            .filter()
+            .sort()
+            .project()
+            .pagination();
+
+        const doc = await APIfeaturesObj.MongooseQuery;
+
+        res.status(200).json({
+            status: 'success',
+            results: doc.length,
             data: { doc },
         });
     });

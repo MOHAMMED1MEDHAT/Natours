@@ -1,7 +1,5 @@
-const APIfeaturs = require('./../util/queryHandler');
 const Tour = require('../model/tourModel');
 const catchAsync = require('./../util/catchAsync');
-const AppError = require('./../util/appError');
 const factory = require('./handlerFactory');
 
 exports.getAllTours = catchAsync(async (req, res, next) => {
