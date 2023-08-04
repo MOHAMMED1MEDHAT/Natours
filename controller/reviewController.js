@@ -26,20 +26,7 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.getReviewById = catchAsync(async (req, res, next) => {
-    const review = await Review.findById(req.params.id);
-
-    if (!review) {
-        return next(new AppError('this id does not exist', 400));
-    }
-
-    res.status(200).json({
-        status: 'success',
-        data: {
-            review,
-        },
-    });
-});
+exports.getReviewById = factory.getOne(Review);
 
 exports.setTourAndUserIds = (req, res, next) => {
     //To Allow for Nested Routes
