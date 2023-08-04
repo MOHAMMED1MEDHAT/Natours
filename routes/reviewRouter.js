@@ -8,7 +8,12 @@ const reviewController = require('./../controller/reviewController');
 router
     .route('/')
     .get(protect, reviewController.getAllReviews)
-    .post(protect, restrictTo('user'), reviewController.addReview);
+    .post(
+        protect,
+        restrictTo('user'),
+        reviewController.setTourAndUserIds,
+        reviewController.addReview
+    );
 
 router
     .route('/:id')
