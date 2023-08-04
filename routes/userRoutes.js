@@ -20,7 +20,7 @@ router.delete(
     User.deleteMe
 );
 
-router.route('/').get(User.getAllUsers).post(User.createUser);
+router.route('/').get(User.getAllUsers);
 
 router
     .route('/:id')
