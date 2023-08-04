@@ -83,24 +83,7 @@ exports.aliasTopTour = catchAsync(async (req, res, next) => {
     req.query.fields = 'name,price,ratingsAvarage,summary';
 });
 
-exports.getTourById = catchAsync(async (req, res, next) => {
-    const tour = await Tour.findById(req.params.id)
-        .populate({
-            path: 'reviews',
-            select: 'review rating author',
-        })
-        // .select('-_id -__v')
-        .exec();
-
-    if (!tour) {
-        return next(new AppError('No tour found with that ID', 404));
-    }
-
-    res.status(200).json({
-        status: 'success',
-        data: { tour },
-    });
-});
+exports.getTourById = factory.getOne(Tour, { path: 'reviews' });
 
 exports.addTour = factory.createOne(Tour);
 
