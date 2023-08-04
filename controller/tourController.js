@@ -102,53 +102,7 @@ exports.getTourById = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.addTour = catchAsync(async (req, res, next) => {
-    // console.log('in add');
-    const {
-        name,
-        duration,
-        maxGroupSize,
-        difficulty,
-        ratingsAverage,
-        ratingsQuantity,
-        price,
-        priceDiscount,
-        summary,
-        discription,
-        imageCover,
-        images,
-        createdAt,
-        startDates,
-        secretTour,
-        startLocation,
-        locations,
-    } = req.body;
-
-    const newTour = await Tour.create({
-        name,
-        duration,
-        maxGroupSize,
-        difficulty,
-        ratingsAverage,
-        ratingsQuantity,
-        price,
-        priceDiscount,
-        summary,
-        discription,
-        imageCover,
-        images,
-        createdAt,
-        startDates,
-        secretTour,
-        startLocation,
-        locations,
-    });
-
-    res.status(200).json({
-        status: 'success',
-        data: { newTour },
-    });
-});
+exports.addTour = factory.createOne(Tour);
 
 exports.updateTourById = factory.updateOne(Tour);
 
