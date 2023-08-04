@@ -13,6 +13,7 @@ router
 router
     .route('/:id')
     .get(protect, reviewController.getReviewById)
+    .put(protect, reviewController.updateReview)
     .delete(protect, reviewController.deleteReview);
 
 module.exports = router;
