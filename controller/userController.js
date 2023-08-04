@@ -13,8 +13,6 @@ const filterObj = (obj, ...allowedAtt) => {
     return newObj;
 };
 
-exports.getAllUsers = factory.getAll(User);
-
 exports.updateMe = catchAsync(async (req, res) => {
     if (req.body.password || req.body.passwordConfirm) {
         return next(
@@ -47,6 +45,8 @@ exports.deleteMe = catchAsync(async (req, res) => {
         data: null,
     });
 });
+
+exports.getAllUsers = factory.getAll(User);
 
 exports.getUser = factory.getOne(User);
 
