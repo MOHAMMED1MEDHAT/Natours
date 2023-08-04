@@ -1,30 +1,8 @@
-const ApiFeatures = require('./../util/queryHandler');
-
 const Review = require('./../model/reviewModel');
 const catchAsync = require('../util/catchAsync');
-const AppError = require('../util/appError');
 const factory = require('./handlerFactory');
 
-exports.getAllReviews = catchAsync(async (req, res, next) => {
-    let tourQuery = {};
-    if (req.params.tourId) tourQuery.tour = req.params.tourId;
-
-    let Query = Review.find(tourQuery);
-
-    const APIfeaturesObj = new ApiFeatures(Query, req.query)
-        .filter()
-        .sort()
-        .project()
-        .pagination();
-
-    const reviews = await APIfeaturesObj.MongooseQuery;
-
-    res.status(200).json({
-        status: 'success',
-        results: reviews.length,
-        data: { reviews },
-    });
-});
+exports.getAllReviews = factory.getAll(Review);
 
 exports.getReviewById = factory.getOne(Review);
 
