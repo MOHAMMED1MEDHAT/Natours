@@ -20,8 +20,6 @@ mongoose
     })
     .catch((err) => console.log('error occured' + err));
 
-// console.log(process.env);
-
 const port = process.env.PORT || 6000;
 const server = app.listen(port, () => {
     console.log(`App listening on prot:${port}`);
