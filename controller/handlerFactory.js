@@ -66,7 +66,11 @@ exports.getOne = (Model, populateOptions) =>
 
 exports.getAll = (Model) =>
     catchAsync(async (req, res, next) => {
-        const APIfeaturesObj = new APIFeatures(Model.find(), req.query)
+        //To allow for the tour to get it own reviews
+        let filter = {};
+        if (req.params.tourId) filter.tour = req.params.tourId;
+
+        const APIfeaturesObj = new APIFeatures(Model.find(filter), req.query)
             .filter()
             .sort()
             .project()
