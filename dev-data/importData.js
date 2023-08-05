@@ -88,10 +88,14 @@ const deleteUserData = async () => {
     }
 };
 
-if (process.argv[3] === '--import') {
+if (process.argv[2] === '--import') {
     importData();
-} else if (process.argv[3] === '--delete') {
+    importReviewData();
+    importUserData();
+} else if (process.argv[2] === '--delete') {
     deleteData();
+    deleteReviewData();
+    deleteUserData();
 }
 
 // console.log(process.argv);
