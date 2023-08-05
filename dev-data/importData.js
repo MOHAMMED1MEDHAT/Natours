@@ -17,7 +17,7 @@ mongoose
     .catch((err) => console.log('error occured' + err));
 
 const tours = JSON.parse(
-    fs.readFileSync(`${__dirname}/data/${process.argv[2]}.json`, 'utf-8')
+    fs.readFileSync(`${__dirname}/data/tours.json`, 'utf-8')
 );
 
 const importData = async () => {
@@ -89,11 +89,11 @@ const deleteUserData = async () => {
 };
 
 if (process.argv[2] === '--import') {
-    importData();
+    // importData();
     importReviewData();
     importUserData();
 } else if (process.argv[2] === '--delete') {
-    deleteData();
+    // deleteData();
     deleteReviewData();
     deleteUserData();
 }
