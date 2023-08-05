@@ -5,20 +5,21 @@ const router = require('express').Router({
 const { protect, restrictTo } = require('../controller/authController');
 const reviewController = require('./../controller/reviewController');
 
+router.use(protect);
+
 router
     .route('/')
-    .get(protect, reviewController.getAllReviews)
+    .get(reviewController.getAllReviews)
     .post(
-        protect,
-        restrictTo('user', 'admin'),
+        restrictTo('user'),
         reviewController.setTourAndUserIds,
         reviewController.addReview
     );
 
 router
     .route('/:id')
-    .get(protect, reviewController.getReviewById)
-    .put(protect, reviewController.updateReview)
-    .delete(protect, reviewController.deleteReview);
+    .get(reviewController.getReviewById)
+    .patch(restrictTo('user', 'admin'), reviewController.updateReview)
+    .delete(restrictTo('user', 'admin'), reviewController.deleteReview);
 
 module.exports = router;
