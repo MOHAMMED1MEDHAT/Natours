@@ -5,7 +5,7 @@ const Review = require('./../model/reviewModel');
 const User = require('./../model/userModel');
 const mongoose = require('mongoose');
 
-console.log(process.env.ATLAS_CONNECTION_STRING);
+// console.log(process.env.ATLAS_CONNECTION_STRING);
 
 mongoose
     .connect(process.env.ATLAS_CONNECTION_STRING, {
