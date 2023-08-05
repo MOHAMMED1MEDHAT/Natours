@@ -1,9 +1,11 @@
-require('dotenv').config({ path: './../config.env' });
+require('dotenv').config({ path: './config.env' });
 const fs = require('fs');
 const Tour = require('./../model/tourModel');
-const Review = require('./../model/reviewModelModel');
+const Review = require('./../model/reviewModel');
 const User = require('./../model/userModel');
 const mongoose = require('mongoose');
+
+console.log(process.env.ATLAS_CONNECTION_STRING);
 
 mongoose
     .connect(process.env.ATLAS_CONNECTION_STRING, {
@@ -46,7 +48,7 @@ const reviews = JSON.parse(
 
 const importReviewData = async () => {
     try {
-        await Review.create(reviews);
+        await Review.create(reviews, { validateBeforeSave: false });
         console.log('added all');
         process.exit();
     } catch (err) {
@@ -70,7 +72,7 @@ const users = JSON.parse(
 
 const importUserData = async () => {
     try {
-        await User.create(users);
+        await User.create(users, { validateBeforeSave: false });
         console.log('added all');
         process.exit();
     } catch (err) {
