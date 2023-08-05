@@ -5,8 +5,6 @@ const Review = require('./../model/reviewModel');
 const User = require('./../model/userModel');
 const mongoose = require('mongoose');
 
-// console.log(process.env.ATLAS_CONNECTION_STRING);
-
 mongoose
     .connect(process.env.ATLAS_CONNECTION_STRING, {
         useNewUrlParser: true,
@@ -91,11 +89,11 @@ const deleteUserData = async () => {
 };
 
 if (process.argv[2] === '--import') {
-    // importData();
+    importData();
     importReviewData();
     importUserData();
 } else if (process.argv[2] === '--delete') {
-    // deleteData();
+    deleteData();
     deleteReviewData();
     deleteUserData();
 }
