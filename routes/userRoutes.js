@@ -6,24 +6,22 @@ const User = require('./../controller/userController');
 
 router.post('/signup', AuthUser.signup);
 router.post('/login', AuthUser.login);
-
 router.post('/forgetPassword', AuthUser.forgetPassword);
 router.patch('/resetPassword/:token', AuthUser.resetPassword);
 
-router.patch('/updateMyPassword', AuthUser.protect, AuthUser.updatePassword);
+router.use(AuthUser.protect);
 
-router.patch('/updateMe', AuthUser.protect, User.updateMe);
+router.patch('/updateMyPassword', AuthUser.updatePassword);
 
-router.get('/me', AuthUser.protect, User.getMe, User.getUser);
+router.patch('/updateMe', User.updateMe);
 
-router.delete(
-    '/deleteMe',
-    AuthUser.protect,
-    AuthUser.restrictTo('admin'),
-    User.deleteMe
-);
+router.get('/me', User.getMe, User.getUser);
 
-router.route('/').get(User.getAllUsers);
+router.delete('/deleteMe', AuthUser.restrictTo('admin'), User.deleteMe);
+
+router.use(AuthUser.restrictTo('admin'));
+
+router.route('/').get(User.getAllUsers).post(User.createUser);
 
 router
     .route('/:id')

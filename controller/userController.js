@@ -55,6 +55,8 @@ exports.getAllUsers = factory.getAll(User);
 
 exports.getUser = factory.getOne(User);
 
+exports.createUser = factory.createOne(User);
+
 //don't update the user password using this route
 exports.updateUser = factory.updateOne(User);
 
