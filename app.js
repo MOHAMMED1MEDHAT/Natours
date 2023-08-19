@@ -3,6 +3,7 @@
 // const fs = require('fs');
 const path = require('path');
 const morgan = require('morgan');
+const multer = require('multer');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -11,6 +12,8 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 
 const globalErrorHandler = require('./controller/errorController');
+
+const upload = multer({ dest: 'public/img/users' });
 
 const app = express();
 
