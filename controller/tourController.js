@@ -1,4 +1,5 @@
 const Tour = require('../model/tourModel');
+const AppError = require('../util/appError');
 const catchAsync = require('./../util/catchAsync');
 const factory = require('./handlerFactory');
 
@@ -68,4 +69,14 @@ exports.getMonthPlan = catchAsync(async (req, res, next) => {
     ]);
 
     res.status(200).json({ stats: 'success', data: { stats } });
+});
+
+exports.getTourWithin = catchAsync(async (req, res, next) => {
+    const { distance, latlng, unit } = req.params;
+
+    const [lat, lng] = latlng.split(',');
+
+    if (!lat || !lng) {
+        next(new AppError('please provide a vaild coordinates', 400));
+    }
 });

@@ -13,6 +13,10 @@ router
         Tours.addTour
     );
 
+router
+    .route('/tours-within/:distance/center/:latlng/unit/:unit')
+    .get(Tours.getTourWithin);
+
 router.use('/:tourId/reviews', reviewRouter);
 
 router
