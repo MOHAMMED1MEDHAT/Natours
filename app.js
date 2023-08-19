@@ -1,7 +1,7 @@
 // 'use strict';
 
 // const fs = require('fs');
-
+const path = require('path');
 const morgan = require('morgan');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
@@ -13,6 +13,10 @@ const hpp = require('hpp');
 const globalErrorHandler = require('./controller/errorController');
 
 const app = express();
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //middeleware
 app.use(helmet());
@@ -49,12 +53,16 @@ app.use(
     })
 );
 
-app.use(express.static(`${__dirname}/public`));
+// app.use(express.static(`${__dirname}/public`));
 
 //routes
 const tourRouter = require('./routes/tourRouter');
 const reviewRouter = require('./routes/reviewRouter');
 const userRouter = require('./routes/userRoutes');
+
+app.get('/', (req, res) => {
+    res.status(200).render('base');
+});
 
 app.use('/api/v1/tour', tourRouter);
 app.use('/api/v1/review', reviewRouter);
