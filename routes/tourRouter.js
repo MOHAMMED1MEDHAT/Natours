@@ -17,6 +17,8 @@ router
     .route('/tours-within/:distance/center/:latlng/unit/:unit')
     .get(Tours.getTourWithin);
 
+router.route('/distances/:latlng/unit/:unit').get(Tours.getDistances);
+
 router.use('/:tourId/reviews', reviewRouter);
 
 router

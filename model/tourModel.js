@@ -152,9 +152,9 @@ TourSchema.post(/^find/, function (doc, next) {
     next();
 });
 
-TourSchema.pre('aggregate', function (next) {
-    this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
-    next();
-});
+// TourSchema.pre('aggregate', function (next) {
+//     this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+//     next();
+// });
 
 module.exports = mongoose.model('Tour', TourSchema);
