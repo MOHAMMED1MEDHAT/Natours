@@ -79,4 +79,18 @@ exports.getTourWithin = catchAsync(async (req, res, next) => {
     if (!lat || !lng) {
         next(new AppError('please provide a vaild coordinates', 400));
     }
+
+    const raduis = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
+
+    const tours = await Tour.find({
+        startLocation: { $geoWithin: { $centerShpere: [[lng, lat], raduis] } },
+    });
+
+    res.status(200).json({
+        message: 'success',
+        results: tours.length,
+        data: {
+            data: tours,
+        },
+    });
 });
