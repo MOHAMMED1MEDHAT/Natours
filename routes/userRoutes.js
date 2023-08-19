@@ -16,7 +16,7 @@ router.use(AuthUser.protect);
 
 router.patch('/updateMyPassword', AuthUser.updatePassword);
 
-router.patch('/updateMe', upload.single('photo'), User.updateMe);
+router.patch('/updateMe', User.uploadUserPhoto, User.updateMe);
 
 router.get('/me', User.getMe, User.getUser);
 

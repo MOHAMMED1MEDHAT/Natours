@@ -13,8 +13,6 @@ const hpp = require('hpp');
 
 const globalErrorHandler = require('./controller/errorController');
 
-const upload = multer({ dest: 'public/img/users' });
-
 const app = express();
 
 app.set('view engine', 'pug');
