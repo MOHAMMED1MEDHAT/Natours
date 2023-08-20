@@ -30,6 +30,10 @@ const upload = multer({
 
 exports.uploadUserPhoto = upload.single('photo');
 
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
+    if (!req.file) return next();
+});
+
 const filterObj = (obj, ...allowedAtt) => {
     const newObj = {};
     for (att in obj) {

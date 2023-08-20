@@ -19,7 +19,7 @@ router.patch('/updateMyPassword', AuthUser.updatePassword);
 router.patch(
     '/updateMe',
     User.uploadUserPhoto,
-    User.resizePhoto,
+    User.resizeUserPhoto,
     User.updateMe
 );
 
