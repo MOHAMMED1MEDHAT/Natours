@@ -31,6 +31,11 @@ exports.uploadTourImages = upload.fields([
     },
 ]);
 
+exports.resizeTourImages = (req, res, next) => {
+    console.log(req.files);
+    next();
+};
+
 exports.getAllTours = factory.getAll(Tour);
 
 exports.aliasTopTour = catchAsync(async (req, res, next) => {
