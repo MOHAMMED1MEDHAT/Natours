@@ -23,6 +23,12 @@ module.exports = class Email {
             },
         });
     }
+
+    send(template, subject) {}
+
+    sendWelcome() {
+        this.send('welcome', 'welcome to our family');
+    }
 };
 
 const sendEmail = async (options) => {
