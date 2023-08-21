@@ -1,7 +1,12 @@
 const nodemailer = require('nodemailer');
 
 module.exports = class Email {
-    constructor() {}
+    constructor(user, url) {
+        this.to = user.email;
+        this.firstName = user.name.split(' ')[0];
+        this.url = url;
+        this.from = process.env.EMAIL_ADDRESS;
+    }
 };
 
 const sendEmail = async (options) => {
