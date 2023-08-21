@@ -48,8 +48,8 @@ module.exports = class Email {
         await this.Transporter().sendMail(mailOptions);
     }
 
-    sendWelcome() {
-        this.send('welcome', 'welcome to our family');
+    async sendWelcome() {
+        await this.send('welcome', 'welcome to our family');
     }
 };
 
