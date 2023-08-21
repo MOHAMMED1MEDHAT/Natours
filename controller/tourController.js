@@ -31,10 +31,37 @@ exports.uploadTourImages = upload.fields([
     },
 ]);
 
-exports.resizeTourImages = (req, res, next) => {
+exports.resizeTourImages = catchAsync(async (req, res, next) => {
     console.log(req.files);
+    if (!req.files.imageCover || !req.files.images) next();
+
+    //1- images cover
+    const imageCoverFilename = `tour-${req.params.id}-${Date.now()}.jpeg`;
+    req.body.imageCover = imageCoverFilename;
+    await sharp(req.files.imageCover[0].buffer)
+        .resize(2000, 1333)
+        .toFormat('jpeg')
+        .jpeg({ quality: 95 })
+        .toFile(req.body.imageCover);
+
+    //2- images
+    req.body.images = [];
+    await Promise.all(
+        req.files.images.map(async (file, i) => {
+            const filename = `tour-${req.params.id}-${Date.now()}-${
+                i + 1
+            }.jpeg`;
+            await sharp(req.files.images[i].buffer)
+                .resize(2000, 1333)
+                .toFormat('jpeg')
+                .jpeg({ quality: 95 })
+                .toFile(req.body.imageCover);
+            req.body.images.push(filename);
+        })
+    );
+
     next();
-};
+});
 
 exports.getAllTours = factory.getAll(Tour);
 
