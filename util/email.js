@@ -49,27 +49,27 @@ module.exports = class Email {
     }
 
     async sendWelcome() {
-        await this.send('welcome', 'welcome to our family');
+        await this.send('emailTemplate', 'welcome to our family');
     }
 };
 
-const sendEmail = async (options) => {
-    const transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        auth: {
-            user: process.env.EMAIL_USERNAME,
-            pass: process.env.EMAIL_PASSWORD,
-        },
-    });
-    const mailOptions = {
-        from: 'mohamed.medhat2121@gmail.com',
-        to: options.email,
-        subject: options.subject,
-        text: options.message,
-    };
+// const sendEmail = async (options) => {
+//     const transporter = nodemailer.createTransport({
+//         host: process.env.EMAIL_HOST,
+//         port: process.env.EMAIL_PORT,
+//         auth: {
+//             user: process.env.EMAIL_USERNAME,
+//             pass: process.env.EMAIL_PASSWORD,
+//         },
+//     });
+//     const mailOptions = {
+//         from: 'mohamed.medhat2121@gmail.com',
+//         to: options.email,
+//         subject: options.subject,
+//         text: options.message,
+//     };
 
-    await transporter.sendMail(mailOptions);
-};
+//     await transporter.sendMail(mailOptions);
+// };
 
-module.exports = sendEmail;
+// module.exports = sendEmail;
