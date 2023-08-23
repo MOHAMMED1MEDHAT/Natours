@@ -1,5 +1,7 @@
 const multer = require('multer');
 
+const Bookings = require('./../model/bookingModel');
+const Tour = require('./../model/tourModel');
 const User = require('./../model/userModel');
 const catchAsync = require('./../util/catchAsync');
 const AppError = require('./../util/appError');
@@ -99,6 +101,21 @@ exports.deleteMe = catchAsync(async (req, res) => {
     res.status(204).json({
         status: 'success',
         data: null,
+    });
+});
+
+exports.getMyTours = catchAsync(async (req, res, next) => {
+    const bookings = await Bookings.find({ user: req.user.id });
+
+    const tourIDs = bookings.map((elm) => elm.tour);
+
+    const tours = await Tour.find({ _id: { $in: tourIDs } });
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            tours,
+        },
     });
 });
 
