@@ -59,6 +59,7 @@ app.use(
 //routes
 const tourRouter = require('./routes/tourRouter');
 const reviewRouter = require('./routes/reviewRouter');
+const bookingRouter = require('./routes/bookingRouter');
 const userRouter = require('./routes/userRoutes');
 
 app.get('/', (req, res) => {
@@ -67,6 +68,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/tour', tourRouter);
 app.use('/api/v1/review', reviewRouter);
+app.use('/api/v1/booking', bookingRouter);
 app.use('/api/v1/users', userRouter);
 
 app.all('*', (req, res, next) => {
