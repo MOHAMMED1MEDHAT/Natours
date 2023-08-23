@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRTE_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Tour = require('./../model/tourModel');
 const catchAsync = require('./../util/catchAsync');
 const factory = require('./handlerFactory');
@@ -7,7 +7,7 @@ const AppError = require('./../util/appError');
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     const tour = await Tour.findById(req.params.tourID);
 
-    console.log(process.env.STRIPE_SECRTE_KEY);
+    // console.log(process.env.STRIPE_SECRET_KEY);
 
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -19,16 +19,23 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         client_reference_id: req.params.tourID,
         line_items: [
             {
-                name: `${tour.name} Tour`,
-                description: tour.summary,
-                images: [
-                    `https://www.natours.dev/img/tours/${tour.imageCover}`,
-                ],
-                amount: tour.price * 100,
-                currency: 'usd',
+                price_data: {
+                    currency: 'usd',
+                    unit_amount: tour.price * 100,
+                    product_data: {
+                        name: tour.name,
+                        description: tour.summary,
+                        images: [
+                            `${req.protocol}://${req.get('host')}/img/tours/${
+                                tour.imageCover
+                            }`,
+                        ],
+                    },
+                },
                 quantity: 1,
             },
         ],
+        mode: 'payment',
     });
 
     res.status(200).json({
